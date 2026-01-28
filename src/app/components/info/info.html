@@ -1,0 +1,36 @@
+<div *ngIf="dataApi" class="content">
+    <div id="header">
+        <h1>Rick & Morty Character List</h1>
+        <div class="pagination">
+            <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+            <span>Page: {{currentPage}} / {{totalPages}}</span>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button><br>
+            Go to: <input type="number" [(ngModel)]="pageToGo"><button (click)="goToPage(pageToGo)">Go to </button>
+        </div>
+        Character name: <input type="text" [(ngModel)]="charName">
+        <button (click)="filterByName()">Filter by name</button>
+        <button (click)="resetFilter()">Reset filter</button>
+        <button (click)="orderByOrigin()">Order by origin</button>
+
+    </div>
+    <div class="card" *ngFor="let character of characters index as i">
+        <div class="card-header">
+            <h3>{{ character.name }}</h3>
+        </div>
+        <img [src]="character.image" [alt]="character.name">
+        <p><b>Gender:</b>{{character.gender}}</p>
+        <p><b>Species:</b>{{character.species}}</p>
+        <p><b>Status:</b>{{character.status}}</p>
+        <p><b>Origin:</b>{{character.origin.name}}</p>
+
+        <button (click)="toggleAcordion(i)">Episodes</button>
+
+        <div *ngIf="activeIndex === i" class="accordion-content">
+            <ul>
+                <li *ngFor="let episode of character.episode">
+                    <a [href]="episode">Episode {{episode.split('/').pop()}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
