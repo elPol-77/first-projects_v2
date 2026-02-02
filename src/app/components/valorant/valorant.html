@@ -1,0 +1,40 @@
+<div *ngIf="dataApi" class="main-container">
+    
+    <div id="header">
+        <h1>Valorant Agents</h1>
+        
+        <div class="filter-controls">
+            <span>Agent Name:</span>
+            <input type="text" [(ngModel)]="charName" placeholder="Search...">
+            
+            <div class="actions">
+                <button (click)="filterByName()">Filter</button>
+                <button (click)="resetFilter()" class="btn-outline">Reset</button>
+                <button (click)="orderByName()">Order A-Z</button>
+            </div> 
+        </div>
+    </div>
+
+    <div class="card-grid">
+        <div class="card" *ngFor="let character of characters index as i">
+            
+            <img [src]="character.background" class="bg-image" alt="">
+
+            <div class="card-header">
+                <h3>{{ character.displayName }}</h3>
+            </div>
+
+            <img [src]="character.fullPortrait" [alt]="character.displayName" class="main-portrait">
+
+            <button (click)="toggleAcordion(i)" class="btn-ability">Abilities</button>
+
+            <div *ngIf="activeIndex === i" class="accordion-content">
+                <ul>
+                    <li *ngFor="let ability of character.abilities">
+                        <img [src]="ability.displayIcon" [alt]="ability.displayName" class="ability-icon">
+                        <a [href]="ability.displayName">{{ability.displayName}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>

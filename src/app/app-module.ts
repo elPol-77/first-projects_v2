@@ -12,6 +12,9 @@ import { Navbar } from './components/navbar/navbar';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Disney } from './components/disney/disney';
+import { Valorant } from './components/valorant/valorant';
+import { Finalspace } from './components/finalspace/finalspace';
+import { Disney2Component } from './components/disney2/disney2';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { Disney } from './components/disney/disney';
     Info,
     Navbar,
     Disney,
+    Valorant,
+    Finalspace,
+    Disney2Component,
   ],
   imports: [
     BrowserModule,

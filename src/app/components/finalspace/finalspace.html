@@ -1,0 +1,34 @@
+<div *ngIf="dataApi" class="content">
+    <div id="header">
+        <h1>Final Space Character List</h1>
+        <!-- <div class="pagination">
+            <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+            <span>Page: {{currentPage}} / {{totalPages}}</span>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button><br>
+            Go to: <input type="number" [(ngModel)]="pageToGo"><button (click)="goToPage(pageToGo)">Go to </button>
+        </div> -->
+        <!-- Character name: <input type="text" [(ngModel)]="charName"> -->
+        <!-- <button (click)="filterByName()">Filter by name</button>
+        <button (click)="resetFilter()">Reset filter</button>
+        <button (click)="orderByOrigin()">Order by origin</button> -->
+
+    </div>
+    <div class="card" *ngFor="let character of characters index as i">
+        <div class="card-header">
+            <h3>{{ character.name }}</h3>
+        </div>
+        <img [src]="character.img_url" [alt]="character.name">
+        <p><b>Status:</b>{{character.status}}</p>
+
+
+        <button (click)="toggleAcordion(i)">Abilities</button>
+
+        <div *ngIf="activeIndex === i" class="accordion-content">
+            <ul>
+                <li *ngFor="let ability of character.abilities">
+                    <p>Ability {{ability.split('/').pop()}}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
