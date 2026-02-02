@@ -11,8 +11,8 @@ export class Disney2Service {
 
   constructor(private http: HttpClient) {}
 
-  getCharacters(page: number= 1 , name: string= ""): Observable<InfoApiDisney> {
-    return this.http.get<InfoApiDisney>(`${this.URI}?page=${page}&name=${name}`)
+  getCharacters(page: number= 1 ,pageSize: number=20, name: string= ""): Observable<InfoApiDisney> {
+    return this.http.get<InfoApiDisney>(`${this.URI}?page=${page}&pageSize=${pageSize}&name=${name}`)
   }
   
 }

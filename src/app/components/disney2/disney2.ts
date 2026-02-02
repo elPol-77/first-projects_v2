@@ -8,16 +8,18 @@ import { CharacterDisney, InfoApiDisney } from '../../common/disneyinterface2';
   templateUrl: './disney2.html',
   styleUrl: './disney2.css',
 })
-export class Disney2Component {
+export class Disney2Component implements OnInit {
   dataApi!: InfoApiDisney;
   characters: CharacterDisney[] = [];
   activeIndex: number | null = null;
+  loading: boolean = false;
+
   currentPage: number = 1;
   totalPages: number = 0;
   pageToGo: number = 1;
   charName: string = '';
   name: string = '';
-
+  pageSize: number = 20;
 
 
   constructor(private disney2: Disney2Service) { }
@@ -27,12 +29,16 @@ export class Disney2Component {
   }
 
   private loadCharacters() {
-    this.disney2.getCharacters(this.currentPage,this.name).subscribe({
+    this.loading = true;
+
+    this.disney2.getCharacters(this.currentPage, this.pageSize, this.name).subscribe({
       next: (value) => {
+
         this.name = this.charName;
         this.dataApi = value;
         this.characters = this.dataApi.data;
         this.totalPages = this.dataApi.info.totalPages;
+        this.loading = false;
       },
       error: (err) => {
         console.error(err);

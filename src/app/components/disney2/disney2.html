@@ -1,35 +1,48 @@
-<div *ngIf="dataApi" class="content">
+<div *ngIf="loading" style="text-align: center; padding: 20px;">
+    <h2>Loading...</h2>
+</div>
+
+<div *ngIf="!loading && dataApi" class="content">
     <div id="header">
-        <h1>Disney 2 Character List</h1>
+        <h1>Disney Character List</h1>
         <div class="pagination">
             <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
             <span>Page: {{currentPage}} / {{totalPages}}</span>
             <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button><br>
-            Go to: <input type="number" [(ngModel)]="pageToGo"><button (click)="goToPage(pageToGo)">Go to </button>
-        </div> 
-        Character name: <input type="text" [(ngModel)]="charName">
-        <button (click)="filterByName()">Filter by name</button>
-        <button (click)="resetFilter()">Reset filter</button>
+            
+            Go to: <input type="number" [(ngModel)]="pageToGo">
+            <button (click)="goToPage(pageToGo)">Go</button>
+        </div>
+        
+        Character name: <input type="text" [(ngModel)]="charName" (input)="filterByName()">
+        <button (click)="filterByName()">Filter</button>
+        <button (click)="resetFilter()">Reset</button>
         <button (click)="orderByName()">Order by Name</button>
-
     </div>
-    <div class="card" *ngFor="let character of characters index as i">
+
+    <div class="card" *ngFor="let character of characters; index as i">
         <div class="card-header">
             <h3>{{ character.name }}</h3>
         </div>
-        <img [src]="character.imageUrl" [alt]="character.name">
-        <p><b>Tv Shows:</b>{{character.tvShows}}</p>
-        <p><b>Films:</b>{{character.films}}</p>
-        <p><b>Short Films:</b>{{character.shortFilms}}</p>
+        
+        <img [src]="character.imageUrl" [alt]="character.name" style="width: 100%; height: 250px; object-fit: cover;">
+        
+        <div class="card-body">
+            <p><b>Films:</b> {{character.films.length}}</p>
+            <p><b>TV Shows:</b> {{character.tvShows.length}}</p>
 
-        <button (click)="toggleAcordion(i)">Films</button>
+            <button (click)="toggleAcordion(i)">
+                {{ activeIndex === i ? 'Hide Films' : 'Show Films' }}
+            </button>
 
-        <div *ngIf="activeIndex === i" class="accordion-content">
-            <ul>
-                <li *ngFor="let film of character.films">
-                    <p>Film: {{film.split('/').pop()}}</p>
-                </li>
-            </ul>
+            <div *ngIf="activeIndex === i" class="accordion-content">
+                <ul>
+                    <li *ngFor="let film of character.films">
+                        {{ film }}
+                    </li>
+                    <li *ngIf="character.films.length === 0">No films available</li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
